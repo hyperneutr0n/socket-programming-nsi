@@ -11,11 +11,12 @@ def main():
 
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            # --- Proses melakukan koneksi TCP dengan server ---
             print(f"\n[*] Menghubungkan ke server di {server_host}:{server_port}...")
             s.connect((server_host, server_port))
             print("[+] Berhasil terhubung ke server.")
 
-            # --- Proses Key Exchange (dilakukan sekali di luar loop) ---
+            # --- Proses Key Exchange ---
             client_key = RSA.generate(2048)
             private_key = client_key
             public_key = client_key.publickey()
@@ -31,7 +32,7 @@ def main():
             print("[+] Kunci Sesi AES berhasil didekripsi! Siap mengirim data.")
             # --- Key Exchange Selesai ---
 
-            # --- Loop untuk mengirim data berulang kali ---
+            # --- Loop agar dapat mengirim data berulang kali ---
             while True:
                 print("\n========================================")
                 print("Silakan masukkan detail slip gaji (ketik 'exit' pada nama untuk keluar):")

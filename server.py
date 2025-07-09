@@ -13,7 +13,7 @@ def handle_connection(conn, addr):
     """Fungsi untuk menangani seluruh sesi koneksi dengan satu client."""
     print(f"\n[+] Koneksi baru dari {addr}")
     try:
-        # --- Proses Key Exchange (dilakukan sekali per koneksi) ---
+        # --- Proses Key Exchange ---
         client_public_key_data = conn.recv(1024)
         client_public_key = RSA.import_key(client_public_key_data)
         print(f"[*] Menerima kunci publik RSA dari {addr}.")
@@ -59,7 +59,7 @@ def handle_connection(conn, addr):
                 decrypted_padded_data = aes_cipher.decrypt(ciphertext)
                 decrypted_data = unpad(decrypted_padded_data, AES.block_size)
                 
-                print(f"[+] Pesan dari {addr}: {decrypted_data.decode('utf-8')}")
+                print(f"[+] Pesan dari {addr}: \n{decrypted_data.decode('utf-8')}")
                 conn.sendall(b"Pesan diterima dan terverifikasi.")
 
             except Exception as e:
